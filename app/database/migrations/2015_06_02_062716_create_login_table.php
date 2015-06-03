@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDepartamentosTable extends Migration {
+class CreateLoginTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,13 @@ class CreateDepartamentosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('departamentos', function(Blueprint $table)
+		Schema::create('login', function(Blueprint $table)
 		{
-			$table->integer('departamento')->primary(); 
-			$table->string('descripcion', 50);  
+			$table->engine = 'InnoDB';
+			$table->integer('id')->primary(); 
+			$table->string('email', 50);  
+			$table->string('password', 200); 
+			$table->string('remember_token', 200);  
 			$table->timestamps();
 		});
 	}
@@ -27,7 +30,7 @@ class CreateDepartamentosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('departamentos');
+		Schema::drop('login');
 	}
 
 }

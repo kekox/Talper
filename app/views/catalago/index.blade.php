@@ -13,7 +13,7 @@
               <div class="row">
                 <div class="col-lg-12 ">
 					  <br>
-                      <h3 class="heading"><a href="dashboard" class="fa fa-arrow-left color-black pull-left" style="text-decoration:none;"></a>Catalago</h3>
+                      <h3 class="heading"><a href="dashboard" class="fa fa-arrow-left color-black " style="text-decoration:none; margin-right:30px;"></a>Catalago</h3>
 
                        @if(Session::has('message_delete'))
                         {{ "<script>
@@ -71,9 +71,9 @@
                                   <td><center>{{$user->departamento}}</center></td> 
                                   <td><center>{{$user->sueldo}}</center></td> 
                                   <td><center>
-                                  {{HTML::link('#MyModalEdit',' Editar',array('class'=>'btn btn-success btn-sm fa fa-pencil edit','data-toggle'=>'modal','title'=>$user->id))}}
-                                  &nbsp;
-                                  {{HTML::link('#MyModalDelete',' Eliminar',array('class'=>'btn btn-danger btn-sm fa fa-trash-o ','data-toggle'=>'modal','title'=>$user->id))}}</center></td> 
+                                  <a href="#MyModalEdit" class="btn btn-success btn-sm fa fa-pencil edit" data-toggle="modal" value="$user->id">Editar</a>
+                                  <a href="#MyModalDelete" class="btn btn-danger btn-sm fa fa-trash-o " data-   toggle="modal" value="$user->id">Eliminar</a>
+                                  
                                  
                                              
                               </tr>
@@ -91,7 +91,9 @@
           
   	</section>
 
-
+          <!-- Modales -->
+          @include('includes.Modales.Agregar')
+         
  	
 
 

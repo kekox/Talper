@@ -3,8 +3,9 @@ class CatalagoController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return View::make('users/index',array('users'=>$users));
+        $users = Empleado::all();
+        $departamentos= Departamento::lists('descripcion');
+        return View::make('catalago/index',array('users'=>$users,'departamentos' => $departamentos));
     }
 
     public function store()

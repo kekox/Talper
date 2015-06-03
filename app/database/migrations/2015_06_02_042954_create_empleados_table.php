@@ -3,22 +3,17 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration {
+class CreateEmpleadosTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
-		Schema::create('users', function(Blueprint $table)
+		Schema::create('empleados', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->integer('id')->primary(); 
 			$table->string('nombre', 50);  
 			$table->string('apPaterno',50);
-			$table->string('apMaterno',50);
-			$table->string('email', 50)->unique();  
+			$table->string('apMaterno',50); 
 			$table->date('fecNac');
 
             $table->integer('departamento');
@@ -27,22 +22,13 @@ class CreateUsersTable extends Migration {
 	            ->on('departamentos');
 	            
 			$table->double('sueldo');
-			$table->string('password', 200); 
-			$table->string('remember_token', 200);  
 			$table->timestamps();
 		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::drop('empleados');
 	}
 
 }
-
-

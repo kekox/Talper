@@ -14,18 +14,23 @@ class HomeController extends BaseController {
            		 ->with('message_bienvenida', 'hola');
         }
         // Show the login page
-        return View::make('users.login');
+        return View::make('catalago.login');
 	}
 
     public function showDashboard()
     {
-        $persona = User::find(1);
-        $departamento = $persona->descripcion;
 
-        return Response::Json($departamento);
+        $usuarios = Empleado::all();
+      
+    
 
-        return View::make('dashboard')
-                ->with('message' , ' Hola');
+
+
+
+        //return Response::json($usuario);
+
+        return View::make('dashboard',array('usuarios'=>$usuarios));
+                   
     }
 
 }
