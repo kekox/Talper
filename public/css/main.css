@@ -1,0 +1,14 @@
+/*Main Style */
+#loginpage .center{
+	margin-top:200px;
+	border-radius: 20px;
+	box-shadow: 10px 10px 10px #888888;
+}
+
+#catalago .heading{
+    text-align: center;
+    font-family: 'Montserrat','Roboto',Helvetica;
+    font-weight: 700;
+    font-size: 36px;
+    color:#204056;
+}

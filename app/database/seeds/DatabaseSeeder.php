@@ -11,7 +11,16 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		//call uses table seeder class
+		$this->call('DepartamentoTableSeeder');
+		//this message shown in your terminal after running db:seed command
+		$this->command->info("Departamentos created :)");
+		//call uses table seeder class
+		$this->call('UserTableSeeder');
+		//this message shown in your terminal after running db:seed command
+		$this->command->info("User created :)");
+
+		
 	}
 
 }

@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Keko custom styles
+   ========================================================================== */
+
+html, body {
+    height: 100%;
+    margin-top:0px;
+    font-family: 'Roboto Slab';
+} 
+
+/* Backgrounds */
+.schema-gray{
+    background-color:#eee ; /*#e9eaed*/
+    height: auto !important;
+    min-height: 100%
+}
+
+.schema-white{
+    background-color: #ffffff;
+}
+
+.schema-teal{
+    background-color: #31a463;
+}
+
+.schema-light-teal{
+  background-color: #dff0d8;
+}
+
+.schema-light-gray{
+    background-color: #f1f2f2;
+}
+
+.schema-light-blue{
+    background-color: #E7EBF2;
+}
+
+.schema-black{
+    background-color: #000000;
+}
+
+.schema-red{
+    background-color: #c9302c;
+}
+
+.schema-green{
+    background-color: #5cb85c;
+}
+
+.schema-dark{
+  background-color: #202024;
+  
+}
+
+.schema-blue{
+  background-color:#3b5998;
+}
+
+.schema-ultra-gray{
+  background-color: #f8f8f8;
+}
+
+.schema-navy-blue{
+  background: #343D46;
+}
+
+/*colores de letras*/
+.color-black{
+    color:#000000;
+}
+
+.text-blue{
+    color:#2ab1de;
+}
+
+.text-blue-fb{
+   color:#3b5998;
+} 
+.text-red{
+    color:#de2f2f;
+}
+
+.text-yellow{
+    color:#ebdb00;
+}
+
+.text-green{
+    color:#159049;
+}
+
+.text-orange{
+    color:#ffa200;
+}
+
+.text-brown{
+   color:#6e4114;
+}
+
+.text-black{
+  color:#333;
+}
+
+.text-white{
+  color:#ffffff;
+}
+/*familia de letras*/
+.montserrat{
+  font-family: 'Montserrat',Helvetica;
+  font-weight: 700;
+}
+
+.montserrat-btn{
+  font-family: 'Montserrat',Helvetica;
+  font-weight: 400;
+}
+
+.nunito{
+  font-family: 'Roboto slab';
+  font-weight: 400;
+}
+
+.roboto{
+  font-family: 'Roboto';
+  font-weight: 700;
+}
+
+.roboto-slab{
+  font-family: 'Roboto slab';
+  font-weight: 400;
+}
+
+.open-sans{
+  font-family: 'Open sans';
+  font-weight: 400;
+
+}
+
+
+/*highlights*/
+
+
+.highlight{
+  background-color: green;
+}
+
+.highlight2{
+  background-color: blue;
+}
+
+.highlight3{
+  background-color: yellow;
+}
+
+.highlight4{
+  background-color: orange;
+}
+
+.highlight5{
+  background-color: green;
+}
+
+/*Helpers*/
+.nospace{
+    margin-bottom:-20px;
+}
+
+.nospacetop{
+    margin-top: -20px;
+}
+
+.space{
+    margin-top:20px;
+}
+
+.space-sm{
+    margin-top:10px;
+}
+
+.display-errors{
+    color:#a94442; 
+    border-color:#ebccd1;
+}
+
+.display-warning{
+    color:#8a6d3b; 
+    border-color:#faebcc;
+}
+
+.display-success{
+  color:#31708f;
+  border-color:#bce8f1;
+}
+
+
+
+
+
+
+
+
+
+
