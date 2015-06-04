@@ -19,10 +19,12 @@
                         {{ "<script>
                             $(document).ready(function()
                             {
-                              $('.ModalUserDelete').modal('show');
+                              $('.MessageDelete').modal('show');
                             });
                            </script>"
                         }}        
+
+
                     @elseif(Session::has('message_edit'))
                        <div class="alert alert-success"><center><span class="fa fa-check-circle"></span>
                        <a href="#" class="close" data-dismiss="alert">&times;</a>{{ Session::get('message_edit') }}</center></div>
@@ -41,7 +43,7 @@
                   
                    
 				
-                      <button id="add" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal"><span class="fa fa-user-plus"> Agregar Usuario</span></button>
+                      <button id="add" class="btn btn-primary pull-right" data-toggle="modal" data-target=".ModalAgregar"><span class="fa fa-user-plus"> Agregar Usuario</span></button>
 					  <br>
                       <br><br>
 		
@@ -71,8 +73,10 @@
                                   <td><center>{{$user->departamento}}</center></td> 
                                   <td><center>{{$user->sueldo}}</center></td> 
                                   <td><center>
-                                  <a href="#MyModalEdit" class="btn btn-success btn-sm fa fa-pencil edit" data-toggle="modal" value="$user->id">Editar</a>
-                                  <a href="#MyModalDelete" class="btn btn-danger btn-sm fa fa-trash-o " data-   toggle="modal" value="$user->id">Eliminar</a>
+                                  <a href="#MyModalEdit" class="btn btn-success btn-sm fa fa-pencil edit" data-toggle="modal" value="{{{$user->id}}}">Editar</a>
+
+                                  <a href="#MyModalDelete" class="btn btn-danger btn-sm fa fa-trash-o " data-toggle="modal" value="{{{$user->id}}}">Eliminar</a>
+                                 </td> 
                                   
                                  
                                              
@@ -93,8 +97,13 @@
 
           <!-- Modales -->
           @include('includes.Modales.Agregar')
+          @include('includes.Modales.Eliminar')
+          @include('includes.Modales.Editar')
          
- 	
+   	      <!-- Mensajes -->
+          @include('includes.Messages.MessageAgregado')
+          @include('includes.Messages.MessageDelete')
+          @include('includes.Messages.MessageUpdate')
 
 
  <script>
@@ -103,5 +112,53 @@
     responsive: true
     });
   </script>
+
+<script>
+  $(document).ready(function(){
+      $('#btnupdate').on('click',function()
+        {
+
+        $.ajax({
+          url: 'catalago/update',
+          dataType: 'json',
+          type:'post',
+          data: $('.formedit').serialize(), //Se obtienen los datos del formulario
+            success: function(datos)
+            {
+
+              $('#nombreEdit ,#apellidoPaternoEdit, #apellidoMaternoEdit, #departamentosEdit, #sueldoEdit, #dateEdit ').text('');
+                if(datos.success == false){
+                  $('#nombreEdit').text(datos.errors.nombre);
+                  $('#apellidoPaternoEdit').text(datos.errors.apPaterno);
+                  $('#apellidoMaternoEdit').text(datos.errors.apMaterno);
+                  $('#departamentosEdit').text(datos.errors.departamento);
+                  $('#sueldoEdit').text(datos.errors.sueldo);
+                  $('#dateEdit').text(datos.errors.fecha);
+
+                  $('#mensajeupdate').text(datos.message)
+                }
+                else
+                {
+
+                   $('#MyModalEdit').modal('hide');
+                   $('.MessageUpdate').modal('show');
+
+                    setTimeout(function()
+                    {
+                    window.location.href="catalago"
+                    } , 1500); 
+                    
+                }
+            },
+
+           
+        });
+
+       });
+
+       
+  });
+</script>
+
 @stop
 

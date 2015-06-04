@@ -8,18 +8,22 @@ class DepartamentoTableSeeder extends Seeder {
         DB::table('departamentos')->delete();
          //insert some dummy records
         DB::table('departamentos')->insert(array(
-                'departamento'=>'1',
+                'departamento'=>'0',
                 'descripcion'=>'Sistemas',
                 ));
         
          DB::table('departamentos')->insert(array(
-                'departamento'=>'2',
+                'departamento'=>'1',
                 'descripcion'=>'Finanzas',
                 ));
 
         DB::table('departamentos')->insert(array(
-                'departamento'=>'3',
+                'departamento'=>'2',
                 'descripcion'=>'Mecatronica',
+                ));
+        DB::table('departamentos')->insert(array(
+                'departamento'=>'3',
+                'descripcion'=>'Administracion',
                 ));
 
   }

@@ -5,7 +5,6 @@ class Empleado extends Eloquent {
 
 	protected $table = 'empleados';
 	protected $fillable = array(
-		'id',
 		'nombre',
 		'apPaterno',
 		'Apmaterno',

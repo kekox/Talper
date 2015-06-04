@@ -5,52 +5,62 @@ class CatalagoController extends Controller
     {
         $users = Empleado::all();
         $departamentos= Departamento::lists('descripcion');
+
         return View::make('catalago/index',array('users'=>$users,'departamentos' => $departamentos));
     }
 
     public function store()
     {
         $data=array(
-            'nombre'           =>Input::get('nombre'),
-            'apellido_paterno' =>Input::get('apellido_paterno'),
-            'apellido_materno' =>Input::get('apellido_materno'),
-            'email'            =>Input::get('email'),
-            'perfil'           =>Input::get('perfil'),
-            'password'         =>Input::get('password')
+            'nombre'       =>Input::get('nombre'),
+            'apPaterno'    =>Input::get('apellidoPaterno'),
+            'apMaterno'    =>Input::get('apellidoMaterno'),
+            'departamento' =>Input::get('departamentos'),
+            'sueldo'       =>Input::get('sueldo'),
+            'fecha'        =>Input::get('date')
         );
+
+        
 
         $rules=array(
-            'nombre'           => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3',
-            'apellido_paterno' => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
-            'apellido_materno' => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
-            'email'            => 'required|min:2|email|unique:users',
-            'perfil'           => 'required',
-            'password'         => 'required|min:6' 
+            'nombre'       => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3',
+            'apPaterno'    => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
+            'apMaterno'    => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
+            'departamento' => 'required',
+            'sueldo'       => 'required|regex:/^\d*(\.\d{2})?$/',
+            'fecha'        => 'required' 
         );
-        
-        $validator = Validator::make($data, $rules);
 
+        $messages=([
+            'required'     => 'El campo es obligatorio',
+            'regex'        => 'El formato del campo es inválido',
+            'sueldo.regex' => 'Ingrese un formato valido',
+            'min'          => 'El campo debe contener al menos :min caracteres.',
+            ]);
+        
+        $validator = Validator::make($data, $rules,$messages);
+
+      
 
 
         if(Request::ajax())
         {
             if ($validator->passes()) {
-                $user                   = new User;
-                $user->nombre           = Input::get('nombre');
-                $user->apellido_Paterno = Input::get('apellido_paterno');
-                $user->apellido_Materno = Input::get('apellido_materno');
-                $user->email            = Input::get('email');
-                $user->perfil_id        = Input::get('perfil');
-                $user->password         = Hash::make(Input::get('password'));
-                $user->save();
-               /* Mail::send('emails.welcome', array('nombre'=>Input::get('nombre')), function($message){
-                    $message->to(Input::get('email'), Input::get('nombre'));
-                    $message->subject('Registro con Éxito');    
-                 });*/
+
+                $empleado                = new Empleado;
+                $empleado ->nombre       = Input::get('nombre');
+                $empleado ->apPaterno    = Input::get('apellidoPaterno');
+                $empleado ->apMaterno    = Input::get('apellidoMaterno');
+                $empleado ->fecNac       = Input::get('date');
+                $empleado ->departamento = Input::get('departamentos');
+                $empleado ->sueldo       = Input::get('sueldo');
+                $empleado ->save();
+                
+              
                 return Response::json
                                     ([
                                         'success' => true,
-                                        'message' => 'El usuario se ha creado satisfactoriamente.'
+                                        'message' => 'El empleado se ha creado satisfactoriamente.'
                                     ]);
             }else{
                 return Response::json
@@ -63,209 +73,98 @@ class CatalagoController extends Controller
          }     
     }
 
-    public function edit($user_id)
+    public function edit($empleado_id)
     {
-        
-        $user = User::find($user_id);
+        $empleado = Empleado::find($empleado_id);
 
         $data=array(
-            'success'          =>true,
-            'id'               =>$user->id,
-            'nombre'           =>$user->nombre,
-            'apellido_Paterno' =>$user->apellido_Paterno,
-            'apellido_Materno' =>$user->apellido_Materno,
-            'email'            =>$user->email,
-            'perfil_id'        =>$user->perfil_id,
-            'password'         =>$user->password,
+            'success'      =>true,
+            'id'           =>$empleado->id,
+            'nombre'       =>$empleado->nombre,
+            'apPaterno'    =>$empleado->apPaterno,
+            'apMaterno'    =>$empleado->apMaterno ,
+            'departamento' =>$empleado->departamento,
+            'sueldo'       =>$empleado->sueldo,
+            'fecha'        =>$empleado->fecNac,
         );
 
         return Response::json($data);
+       
     }
     
     public function update()
     {
-        $user_id = Input::get('user_id');
-        $user    = User::find($user_id);
+        $empleado_id = Input::get('empleado_id');
+        $empleado    = Empleado::find($empleado_id);
 
         $data=array(
-            'nombre'           =>Input::get('nombre_edit'),
-            'apellido_paterno' =>Input::get('apellido_paterno_edit'),
-            'apellido_materno' =>Input::get('apellido_materno_edit'),
-            'email'            =>Input::get('email_edit'),
-            'perfil'           =>Input::get('perfil_edit'),
-            'password'         =>Input::get('password_edit'),      
+            'nombre'       =>Input::get('nombreEdit'),
+            'apPaterno'    =>Input::get('apellidoPaternoEdit'),
+            'apMaterno'    =>Input::get('apellidoMaternoEdit'),
+            'departamento' =>Input::get('departamentosEdit'),
+            'sueldo'       =>Input::get('sueldoEdit'),
+            'fecha'        =>Input::get('dateEdit')
         );
 
         $rules=array(
-            'nombre'           => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3',
-            'apellido_paterno' => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
-            'apellido_materno' => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
-            'email'            => 'required|min:2|email|unique:users',
-            'perfil'           => 'required',
-            'password'         => 'required|min:6' 
+            'nombre'       => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3',
+            'apPaterno'    => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
+            'apMaterno'    => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
+            'departamento' => 'required',
+            'sueldo'       => 'required|regex:/^\d*(\.\d{2})?$/',
+            'fecha'        => 'required' 
         );
+
+        $messages=([
+            'required'     => 'El campo es obligatorio',
+            'regex'        => 'El formato del campo es inválido',
+            'sueldo.regex' => 'Ingrese un formato valido',
+            'min'          => 'El campo debe contener al menos :min caracteres.',
+            ]);
         
-        $message=array(
-            'email.unique' => 'El correo electrónico que intenta actualizar ya existe.'
-            );
-     
-        $comparepass = Input::get('password_edit');
-
-        $validator = Validator::make($data, $rules,$message);
-        if ($validator->passes()) {
-            if(Request::ajax())
-            {
-                if(Hash::check($comparepass,$user->password)){
-
-                    $user->nombre           = Input::get('nombre_edit');
-                    $user->apellido_Paterno = Input::get('apellido_paterno_edit');
-                    $user->apellido_Materno = Input::get('apellido_materno_edit');
-                    $user->email            = Input::get('email_edit');
-                    $user->perfil_id        = Input::get('perfil_edit');
-                    $user->save();
-
-                    return Response::json
-                                                ([
-                                                    'success' => true,
-                                                    'message' => 'El usuario se ha editado correctamente.',
-                                                 ]);
-                }else{
-                   
-                        if($user->password == Input::get('password_edit') && $user->email == Input::get('email_edit')){
-
-
-                        $user->nombre           = Input::get('nombre_edit');
-                        $user->apellido_Paterno = Input::get('apellido_paterno_edit');
-                        $user->apellido_Materno = Input::get('apellido_materno_edit');
-                        $user->perfil_id        = Input::get('perfil_edit');
-                        $user->save();
-
-                                return Response::json
-                                        ([
-                                            'success' => true,
-                                            'message' => 'El password y el correo no se modificaron.',
-                                        ]);
-
-                        }else if($user->password != Input::get('password_edit') && $user->email == Input::get('email_edit')){
-
-                        /*$user->nombre           = Input::get('nombre_edit');
-                        $user->apellido_Paterno = Input::get('apellido_paterno_edit');
-                        $user->apellido_Materno = Input::get('apellido_materno_edit');
-                        $user->perfil_id        = Input::get('perfil_edit');
-                        $user->password         = Hash::make(Input::get('password_edit'));
-                        $user->save();*/
-
-                                return Response::json
-                                        ([
-                                            'success' => true,
-                                            'message' => 'El password si se modifico pero el correo no',
-                                        ]);
-                        }else if($user->password == Input::get('password_edit') && $user->email != Input::get('email_edit')){
-
-                        $user->nombre           = Input::get('nombre_edit');
-                        $user->apellido_Paterno = Input::get('apellido_paterno_edit');
-                        $user->apellido_Materno = Input::get('apellido_materno_edit');
-                        $user->perfil_id        = Input::get('perfil_edit');
-                        $user->email            = Input::get('email_edit');
-                        $user->save();
-
-                                return Response::json
-                                        ([
-                                            'success' => true,
-                                            'message' => 'El password no se modifico pero si el correo',
-                                            'bandera' => 'ya ha sido registrado' 
-                                        ]);
-                        }else{
-
-                        /*$user->nombre           = Input::get('nombre_edit');
-                        $user->apellido_Paterno = Input::get('apellido_paterno_edit');
-                        $user->apellido_Materno = Input::get('apellido_materno_edit');
-                        $user->email            = Input::get('email_edit');
-                        $user->perfil_id        = Input::get('perfil_edit');
-                        $user->password         = Hash::make(Input::get('password_edit'));
-                        $user->save();*/
-
-                                return Response::json
-                                        ([
-                                            'success' => true,
-                                            'message' => 'Los dos se modificaron',
-                                        ]);
-                        }                                
-                                                
-
-                }
-            }else{
-                return Redirect::to('cms')
-                   ->with('message_edit','Usuario Editado Correctamente');
-            }   
-        }
-        else
+            
+   
+        $validator = Validator::make($data, $rules,$messages);
+        if(Request::ajax())
         {
-            if(Request::ajax())
-            {
+            if ($validator->passes()) {
+
+                $empleado ->nombre       = Input::get('nombreEdit');
+                $empleado ->apPaterno    = Input::get('apellidoPaternoEdit');
+                $empleado ->apMaterno    = Input::get('apellidoMaternoEdit');
+                $empleado ->fecNac       = Input::get('dateEdit');
+                $empleado ->departamento = Input::get('departamentosEdit');
+                $empleado ->sueldo       = Input::get('sueldoEdit');
+                $empleado ->save();
+                
+              
+                return Response::json
+                                    ([
+                                        'success' => true,
+                                        'message' => 'El empleado se ha creado satisfactoriamente.'
+                                    ]);
+            }else{
                 return Response::json
                                     ([
                                         'success' => false,
-                                        'errors'  => $validator ->getMessageBag()->toArray(),
-                                        'message' => 'Verifique los datos.'
+                                        'errors' => $validator ->getMessageBag()->toArray(),
+                                        'message' => 'Verifica los datos.'
                                     ]);
-            }else{
-                 return Redirect::to('cms')
-                    ->withErrors($validator)
-                    ->with('message_fail','Error al modificar el usuario. Favor de revisar los siguientes errores:')
-                    ->withInput();
-            }          
-        }
+            }
+         } 
     }
 
     
-    public function destroy($user_id)
+    public function destroy($empleado_id)
     {
-        $user = User::find($user_id);
-        $user->delete();
-        return Redirect::to('cms')
+        $empleado = Empleado::find($empleado_id);
+        $empleado->delete();
+        return Redirect::to('catalago')
             ->with('message_delete','Usuario Eliminado Correctamente');
     }
     
     
-    public function postUpdatePerfil()
-    {
-        $user_id = Input::get('user_id');
-        $user    = User::find($user_id);
-
-        $data=array(
-            'nombre'           =>Input::get('nombre_edit'),
-            'apellido_paterno' =>Input::get('apellido_paterno_edit'),
-            'apellido_materno' =>Input::get('apellido_materno_edit'),
-            'email'            =>Input::get('email_edit'),
-        );
-        $rules=array(
-            'nombre'           => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3',
-            'apellido_paterno' => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
-            'apellido_materno' => 'required|regex:/^[\sa-zA-ZñÑáéíóúÁÉÍÓÚ-]+$/|min:3|max:25',
-            'email'            => 'required|min:2|email|unique:users',
-           
-        );
-        
-        $validator = Validator::make($data, $rules);
-        if ($validator->passes()) {
-            $user->nombre           = Input::get('nombre_edit');
-            $user->apellido_Paterno = Input::get('apellido_paterno_edit');
-            $user->apellido_Materno = Input::get('apellido_materno_edit');
-            $user->email            = Input::get('email_edit');
-            
-            $user->save();
-
-                return Redirect::to('dashboard')
-                    ->with('message_perfil','El perfil se ha actualizado de manera Correcta.');
-        }
-        else
-        {   
-                return Redirect::to('dashboard')
-                    ->with('message','Error al editar el perfil.           Favor de revisarlo')
-                    ->withErrors($validator);
-            
-        }
-    }
+    
+    
     
 }

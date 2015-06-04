@@ -44,6 +44,7 @@
 			                    <input class="form-control" placeholder="Correo Electrónico" id="username" name="email" type="email">
 			                </div>
 			                <span class=" display-errors"  id="_email">  {{ $errors->first('email') }}</span>
+			                <small>test@hotmail.com</small>
 			                
 			           
 			                <div class="input-group space">
@@ -51,6 +52,7 @@
 			                    <input class="form-control" placeholder="Contraseña" id="password" name="password" type="password" value="">     
 			                </div>
 			                <span class=" display-errors text-justify" id="_password">  {{ $errors->first('password') }}</span>
+			                <small>test1234</small>
 			                 
 
 			                <div class="form-group space">

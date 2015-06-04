@@ -14,7 +14,7 @@
 /* Pagina Bienvenida y Login*/
 Route::get('/',array('uses' => 'HomeController@showLogin'));
 
-Route::when('*', 'csrf', array('post', 'put', 'delete'));
+//Route::when('*', 'csrf', array('post', 'put', 'delete'));
 
 /*login*/
 Route::get ('login' , array('uses'   => 'AuthController@index'));
@@ -35,10 +35,10 @@ Route::group(array('before' => 'auth'), function()
 
     /*Seccion catalago*/
 	Route::get('catalago',array('uses'             => 'CatalagoController@index'));
-	Route::post('catalago',array('uses'            => 'CatalagoController@store','as'=>'user.store'));
-	Route::post('catalago/edit/{id}',array('uses'  => 'CatalagoController@edit','as'=>'user.data'));
-	Route::post('catalago/update',array('uses'     => 'CatalagoController@update','as'=>'user.update'));
-	Route::get('catalago/delete/{id}',array('uses' => 'CatalagoController@destroy','as'=>'user.delete'));
+	Route::post('catalago',array('uses'            => 'CatalagoController@store','as'=>'empleado.store'));
+	Route::post('catalago/edit/{id}',array('uses'  => 'CatalagoController@edit','as'=>'empleado.data'));
+	Route::post('catalago/update',array('uses'     => 'CatalagoController@update','as'=>'empleado.update'));
+	Route::get('catalago/delete/{id}',array('uses' => 'CatalagoController@destroy','as'=>'empleado.delete'));
 
 
 	

@@ -10,7 +10,7 @@ class CreateEmpleadosTable extends Migration {
 		Schema::create('empleados', function(Blueprint $table)
 		{
 			$table->engine = 'InnoDB';
-			$table->integer('id')->primary(); 
+			$table->increments('id'); 
 			$table->string('nombre', 50);  
 			$table->string('apPaterno',50);
 			$table->string('apMaterno',50); 
