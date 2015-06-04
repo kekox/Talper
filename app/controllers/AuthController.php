@@ -11,7 +11,7 @@ class AuthController extends BaseController{
                 ->with('message_bienvenida');
         }
         // Show the login page
-        return View::make('users/login');
+        return View::make('catalago/login');
         
     }
 

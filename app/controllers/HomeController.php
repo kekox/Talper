@@ -20,7 +20,7 @@ class HomeController extends BaseController {
     public function showDashboard()
     {
 
-        $usuarios = Empleado::all();
+        $empleados = Empleado::all();
       
     
 
@@ -29,7 +29,7 @@ class HomeController extends BaseController {
 
         //return Response::json($usuario);
 
-        return View::make('dashboard',array('usuarios'=>$usuarios));
+        return View::make('dashboard',array('empleados'=>$empleados));
                    
     }
 

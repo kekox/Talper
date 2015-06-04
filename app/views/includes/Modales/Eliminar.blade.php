@@ -20,7 +20,7 @@
                   <div class="modal-footer">
                     <div class="col-lg-10 col-lg-offset-1">
                       <button class="btn btn-default btn-block" data-dismiss="modal" type="button">Cerrar</button>
-                      <a href="http://www.talperapp.com/catalago/delete/+{{{$user->id}}}" class="btn btn-danger btn-block btn-sm">Eliminar</a>
+                      <a href="catalago/delete/{{$user->id}}" class="btn btn-danger btn-block btn-sm">Eliminar</a>
                     </div>
                   </div>
                   @endif

@@ -216,6 +216,7 @@ $(document).ready(function(){
        });
     /*Termina ajax de update empleado*/
     
+    
 });//Termina document ready
 
 
